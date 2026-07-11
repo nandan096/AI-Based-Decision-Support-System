@@ -60,59 +60,72 @@ The system automatically selects the appropriate model depending on the selected
 
 ---
 
-## 📂 Project Structure
+## 📁 Project Structure
 
-📦 AI-Based-Decision-Support-System
+```text
+AI-Based-Decision-Support-System/
 │
-├── 📁 app
-│   ├── app.py
-│   ├── predict.py
-│   └── market.py
+├── app/
+│   ├── app.py                 # Streamlit application
+│   ├── predict.py             # Price prediction module
+│   └── market.py              # Market recommendation logic
 │
-├── 📁 Models
-│   ├── 📁 models
-│   └── 📁 scalers
+├── Models/
+│   ├── models/
+│   │   ├── onion_model.h5
+│   │   ├── tomato_rf.pkl
+│   │   └── potato_lr.pkl
+│   │
+│   └── scalers/
+│       ├── onion_scaler.pkl
+│       ├── tomato_scaler.pkl
+│       └── potato_scaler.pkl
 │
-├── 📁 data
+├── data/
+│   ├── Raw Data/
+│   └── Processed Data/
 │
-├── 📁 Notebooks
+├── Notebooks/
+│   ├── 01_Data_Understanding.ipynb
+│   ├── 02_Preprocessing.ipynb
+│   ├── 03_Model_Training.ipynb
+│   ├── 04_Model_Comparison.ipynb
+│   └── 05_Decision_Support_Engine.ipynb
 │
-├── README.md
 ├── requirements.txt
-└── runtime.txt
+├── runtime.txt
+└── README.md
+```
 
-## Project Workflow
+## 🔄 Project Workflow
 
-Historical Data
-        │
-        ▼
- Data Preprocessing
-        │
-        ▼
- Crop Selection
-        │
-        ▼
- Hybrid Model Selection
-        │
-├───────────────┐
-│               │
-LSTM         Random Forest
-│               │
-└──────┬────────┘
-       │
-Linear Regression
-       │
-       ▼
+```text
+Historical Market Data
+          │
+          ▼
+Data Preprocessing
+          │
+          ▼
+Crop Selection
+          │
+          ▼
+Hybrid Model Selection
+   ├── Onion  → LSTM
+   ├── Tomato → Random Forest
+   └── Potato → Linear Regression
+          │
+          ▼
 Price Prediction
-       │
-       ▼
+          │
+          ▼
 Profit Analysis
-       │
-       ▼
+          │
+          ▼
 Market Recommendation
-       │
-       ▼
+          │
+          ▼
 Streamlit Dashboard
+```
 
 
 ## ⚙️ Installation

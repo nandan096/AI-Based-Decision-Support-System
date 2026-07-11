@@ -1,5 +1,19 @@
 # 🌾 AI-Based Decision Support System for Agricultural Price Prediction and Market Recommendation
 
+![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-LSTM-orange?logo=tensorflow)
+![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-ML-F7931E?logo=scikitlearn)
+![Streamlit](https://img.shields.io/badge/Streamlit-Deployed-red?logo=streamlit)
+![License](https://img.shields.io/badge/License-MIT-green)
+
+## 🌐 Live Demo
+
+👉 **[Launch Application](https://ai-based-decision-support-system.streamlit.app/)**
+
+## 💻 GitHub Repository
+
+👉 **[View Source Code](https://github.com/nandan096/AI-Based-Decision-Support-System)**
+
 ## 📌 Project Overview
 
 This project presents an AI-Based Decision Support System that assists farmers in making informed agricultural marketing decisions by predicting crop prices and recommending the best market for selling their produce.
@@ -48,32 +62,58 @@ The system automatically selects the appropriate model depending on the selected
 
 ## 📂 Project Structure
 
-```text
-AI-Based-Decision-Support-System
+📦 AI-Based-Decision-Support-System
 │
-├── app/
+├── 📁 app
 │   ├── app.py
 │   ├── predict.py
 │   └── market.py
 │
-├── data/
-│   ├── Processed Data/
-│   └── Raw Data/
+├── 📁 Models
+│   ├── 📁 models
+│   └── 📁 scalers
 │
-├── Models/
-│   ├── models/
-│   └── scalers/
+├── 📁 data
 │
-├── Notebooks/
+├── 📁 Notebooks
 │
-├── Paper/
-│
-├── requirements.txt
 ├── README.md
-└── .gitignore
-```
+├── requirements.txt
+└── runtime.txt
 
----
+## Project Workflow
+
+Historical Data
+        │
+        ▼
+ Data Preprocessing
+        │
+        ▼
+ Crop Selection
+        │
+        ▼
+ Hybrid Model Selection
+        │
+├───────────────┐
+│               │
+LSTM         Random Forest
+│               │
+└──────┬────────┘
+       │
+Linear Regression
+       │
+       ▼
+Price Prediction
+       │
+       ▼
+Profit Analysis
+       │
+       ▼
+Market Recommendation
+       │
+       ▼
+Streamlit Dashboard
+
 
 ## ⚙️ Installation
 
@@ -118,17 +158,6 @@ streamlit run app/app.py
 
 ---
 
-## 📷 Screenshots
-
-The following screenshots will be added after deployment.
-
-- Home Page
-- Prediction Result
-- Profit Analysis
-- Recommended Market
-- Top 10 Market Comparison
-
----
 
 ## 🔮 Future Enhancements
 
@@ -140,6 +169,9 @@ The following screenshots will be added after deployment.
 - Additional crop support
 
 ---
+## 📌 Summary
+
+This project demonstrates the application of Machine Learning, Deep Learning, and Decision Support Systems to solve a real-world agricultural problem. By integrating multiple predictive models with an interactive Streamlit dashboard, the system assists users in making informed crop marketing decisions through price forecasting, profit estimation, and market recommendations.
 
 ## 📄 License
 

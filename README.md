@@ -58,18 +58,14 @@ Commodities exhibit distinct economic profiles (e.g., tomato is highly perishabl
 ### Model Benchmark Summary
 
 | Commodity | Evaluated Model | RMSE (₹/Quintal) | MAE (₹/Quintal) | $R^2$ Score | Selection Status |
-| --- | --- | --- | --- | --- | --- |
+| :--- | :--- | :--- | :--- | :--- | :--- |
 | **Onion** | **Linear Regression** | **330.82** | **199.63** | **0.8587** | **Selected (Fast/Linear)** |
 | Onion | Random Forest | 369.36 | 222.56 | 0.8238 | Benchmark Baseline |
 | Onion | Gradient Boosting | 382.63 | 228.70 | 0.8109 | Benchmark Baseline |
-| Onion | LSTM Network | 443.42 | 289.20 | 0.7199 | Deployed Deep Learning Model
-
- |
+| Onion | LSTM Network | 443.42 | 289.20 | 0.7199 | Deployed Deep Learning Model |
 | **Tomato** | **Linear Regression (Lags 1–3)** | **289.57** | **192.05** | **0.3705** | **Selected** |
 | Tomato | Gradient Boosting | 301.26 | 216.52 | 0.3186 | Benchmark Baseline |
-| Tomato | Random Forest | 343.44 | 238.56 | 0.1145 | Deployed Baseline Model
-
- |
+| Tomato | Random Forest | 343.44 | 238.56 | 0.1145 | Deployed Baseline Model |
 | **Potato** | **Gradient Boosting (Lags 1–7)** | **369.23** | **264.97** | **0.3050** | **Selected** |
 | Potato | Random Forest | 382.12 | 276.56 | 0.2557 | Deployed Baseline Model |
 | Potato | Linear Regression | 385.22 | 253.30 | 0.2436 | Benchmark Baseline |

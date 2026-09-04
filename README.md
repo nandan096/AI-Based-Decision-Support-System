@@ -1,4 +1,3 @@
-````markdown
 # 🌾 AI-Based Decision Support System for Agricultural Price Prediction and Market Recommendation
 
 ![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=flat&logo=python&logoColor=white)
@@ -153,7 +152,7 @@ AI-Based-Decision-Support-System/
 ├── .gitignore
 └── README.md
 ```
-````
+
 
 ---
 

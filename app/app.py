@@ -45,8 +45,8 @@ with about_col:
   st.markdown("**Key Features**")
   st.write("""
     - 🌾 Predicts crop prices using Machine Learning
-    - 🧠 Automatically selects the best-performing model for each crop
-    - 📈 Estimates future profit and holding opportunity cost
+    - 🧠 Uses the best-performing model selected for each crop
+    - 📈 Estimates future profit and potential gain from holding
     - 💰 Provides Sell / Wait recommendations based on expected price movement
     - 🏪 Recommends the best market accounting for net transport freight
     - 📊 Uses historical market transaction data across Karnataka APMCs

@@ -79,9 +79,7 @@ st.markdown("---")
 
 if predict:
   crop_df = df[df["Commodity"] == crop].copy()
-  crop_df = (
-      crop_df.groupby("Price Date")["Modal_Price"].mean().reset_index()
-  )
+  crop_df = crop_df.groupby("Price Date")["Modal_Price"].mean().reset_index()
   crop_df = crop_df.sort_values("Price Date")
 
   sample_prices = crop_df["Modal_Price"].tail(30).tolist()
@@ -94,21 +92,33 @@ if predict:
   predicted_price = predict_price(sample_prices, crop, month=latest_month)
   today_price = sample_prices[-1]
 
+  # ----------------------------------------------------
+  # Economic Decision Engine (Threshold theta = Rs. 50/qtl)
+  # ----------------------------------------------------
+  THETA_BUFFER = 50.0  # Holding risk threshold (₹/Qtl)
+
   difference = predicted_price - today_price
   percentage = (difference / today_price) * 100
 
-  if difference > 0:
+  if difference > THETA_BUFFER:
     recommendation = "WAIT"
     reason = (
-        "Price is projected to increase. Holding stock is expected to yield"
-        " higher returns."
+        f"Expected price rise of ₹{difference:.2f}/Qtl exceeds the "
+        f"₹{THETA_BUFFER:.2f}/Qtl holding-risk threshold."
     )
   else:
     recommendation = "SELL NOW"
-    reason = (
-        "Price is projected to decline. Selling immediately protects against"
-        " market drop."
-    )
+    if difference > 0:
+      reason = (
+          f"Expected gain of ₹{difference:.2f}/Qtl is insufficient to "
+          "justify holding the produce after considering storage and price"
+          " risk."
+      )
+    else:
+      reason = (
+          "Price is projected to decline or remain flat. Selling now is"
+          " recommended."
+      )
 
   # ====================================================
   # Prediction Result
@@ -154,10 +164,16 @@ if predict:
     st.metric("Predicted Revenue", f"₹{tomorrow_revenue:,.2f}")
     st.metric("Predicted Profit", f"₹{tomorrow_profit:,.2f}")
 
-  if profit_difference > 0:
+  if profit_difference > (THETA_BUFFER * quantity):
     st.success(
-        f"💰 Expected Gain if you WAIT: +₹{profit_difference:,.2f} (Holding is"
-        " profitable)"
+        f"💰 Expected Gain if you WAIT: +₹{profit_difference:,.2f} (Exceeds"
+        f" holding threshold of ₹{THETA_BUFFER * quantity:,.2f})"
+    )
+  elif profit_difference > 0:
+    st.warning(
+        f"⚠️ Nominal Gain: +₹{profit_difference:,.2f} (Does not cover minimum"
+        f" risk buffer of ₹{THETA_BUFFER * quantity:,.2f}; selling now"
+        " recommended)"
     )
   else:
     st.warning(

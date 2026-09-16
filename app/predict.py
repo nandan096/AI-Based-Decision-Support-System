@@ -7,7 +7,7 @@ import pandas as pd
 # -------------------------------------------------------------
 onion_model = joblib.load('Models/models/onion_lr.pkl')
 tomato_model = joblib.load('Models/models/tomato_lr.pkl')
-potato_model = joblib.load('Models/models/potato_gb.pkl')
+potato_model = joblib.load('Models/models/potato_lr.pkl')
 
 
 # -------------------------------------------------------------

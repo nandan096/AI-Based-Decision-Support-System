@@ -6,7 +6,6 @@ DEFAULT_TRANSPORT_RATE_PER_KM = 2.0
 # Actual road distances (km) from Bengaluru-Ramanagara production centroid 
 # across all 41 monitored Karnataka APMC markets
 MARKET_DISTANCES_KM = {
-    # South Karnataka / Centroid Belt
     "Ramanagara": 15,
     "Channapatna": 25,
     "Bangalore": 35,
@@ -50,10 +49,48 @@ MARKET_DISTANCES_KM = {
     "Jamkhandi": 542,
     "Gulbarga": 575,
     "Bidar": 670,
+    # Added: previously unmapped markets (distances from Ramanagara, via Google Maps)
+    "Arakalgud": 170,
+    "Bagepalli": 156,
+    "Bagalkot(Bilagi)": 490,
+    "Bangarpet": 137,
+    "Belur": 197,
+    "Binny Mill (F&V), Bangalore": 45,
+    "Chikkamagalore": 220,
+    "Gadag": 432,
+    "Gowribidanoor": 134,
+    "Haveri": 352,
+    "Holalkere": 228,
+    "Hoskote": 76,
+    "Humanabad": 704,
+    "Hunsur": 128,
+    "K.R. Pet": 218,
+    "K.R.Nagar": 124,
+    "Kadur": 213,
+    "Kanakapura": 28,
+    "Mulabagilu": 85,
+    "Nagamangala": 77,
+    "Ranebennur": 320,
+    "Srinivasapur": 157,
+    "T. Narasipura": 89,
+    "Tarikere": 244,
+    "Udupi": 379,
 }
 
 # Case-insensitive and trimmed lookup dictionary to prevent string matching issues
 NORMALIZED_DISTANCES = {k.strip().lower(): v for k, v in MARKET_DISTANCES_KM.items()}
+# Spelling variants seen in the actual CSV that refer to the same market
+NAME_ALIASES = {
+    "arasikere": "arsikere",
+    "bagalakot": "bagalkot",
+    "chickkaballapura": "chickballapur",
+    "channapatana": "channapatna",
+    "mysore (bandipalya)": "mysore",
+}
+
+for alias, canonical in NAME_ALIASES.items():
+    if canonical in NORMALIZED_DISTANCES:
+        NORMALIZED_DISTANCES[alias] = NORMALIZED_DISTANCES[canonical]
 
 # State median highway distance used only if an unmapped mandi is encountered
 STATE_MEDIAN_DISTANCE_KM = 265
@@ -71,13 +108,20 @@ def get_best_market_analysis(
     # Accommodate both 'Market Name' and 'Market' column naming
     market_col = 'Market Name' if 'Market Name' in crop_df.columns else 'Market'
 
-    # Retrieve the latest market price record for each APMC market
+    # Retrieve the latest market price record for each APMC market,
+    # then drop markets whose most recent price is too old to trust
     latest = (
         crop_df.sort_values('Price Date')
         .groupby(market_col)
         .last()
         .reset_index()
     )
+
+    most_recent_date = crop_df['Price Date'].max()
+    STALENESS_LIMIT_DAYS = 14
+    latest = latest[
+        (most_recent_date - latest['Price Date']).dt.days <= STALENESS_LIMIT_DAYS
+    ].reset_index(drop=True)
 
     # 1. Clean market names and map to real highway distances
     def resolve_distance(market_name):
@@ -114,7 +158,7 @@ def get_best_market_analysis(
         'Modal_Price',
         'Transport Cost (₹/Qtl)',
         'Net Price (₹/Qtl)',
-    ]].head(top_n)
+    ]].head(top_n).copy()
 
     market_table.columns = [
         'Market',

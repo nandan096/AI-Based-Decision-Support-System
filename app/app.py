@@ -30,8 +30,13 @@ THETA_BUFFER = 50.0  # Risk buffer threshold (₹/quintal)
 # Load Dataset
 # ----------------------------------------------------
 
-df = pd.read_csv("data/Processed Data/Karnataka_Processed.csv")
-df["Price Date"] = pd.to_datetime(df["Price Date"], format="%d/%m/%Y")
+@st.cache_data
+def load_data():
+    df = pd.read_csv("data/Processed Data/Karnataka_Processed.csv")
+    df["Price Date"] = pd.to_datetime(df["Price Date"], format="%d/%m/%Y")
+    return df
+
+df = load_data()
 
 # ----------------------------------------------------
 # Title & Header
@@ -85,7 +90,7 @@ with input_col:
         step=50,
     )
 
-    predict = st.button("🚀 Predict", use_container_width=True)
+    predict = st.button("🚀 Predict", width="stretch")
 
 st.markdown("---")
 
@@ -249,7 +254,7 @@ if predict:
 
     st.subheader("📊 Top 10 Market Comparison")
 
-    st.dataframe(market_table, use_container_width=True, hide_index=True)
+    st.dataframe(market_table, width="stretch", hide_index=True)
 
 else:
     st.info("👈 Select your crop and inputs above, then click **🚀 Predict**")
